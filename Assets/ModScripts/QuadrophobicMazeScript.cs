@@ -121,7 +121,7 @@ public class QuadrophobicMazeScript : MonoBehaviour
 	    resetKeysForReference = keys.ToList();
 	    
         
-        Log($"[Quadrophobic Maze #{moduleId}] The initial position is at [{currentPosition.Join(",")}] ({currentPositionIcon.DecimalPosition})");
+        Log($"[Quadrophobic Maze #{moduleId}] The initial position is at [{currentPosition.Join(",")}] ({currentPositionIcon.DecimalPosition}) (Table Coordinate: {currentPositionIcon}))");
         Log($"[Quadrophobic Maze #{moduleId}] ----------------------------------------------------");
         Log($"[Quadrophobic Maze #{moduleId}] Goals are found in {keys.Select(x => $"[{QMExtensions.GetCoords(x, iconGrid).Join(",")}] ({x.DecimalPosition}) (Table Coordinate: {x})").Join(", ")}");
         Log($"[Quadrophobic Maze #{moduleId}] ----------------------------------------------------");
@@ -313,7 +313,7 @@ public class QuadrophobicMazeScript : MonoBehaviour
         }
         else
         {
-	        if (keys.First().Equals(currentPositionIcon))
+	        if (keys.First() == currentPositionIcon)
 	        {
 		        Log($"[Quadrophobic Maze #{moduleId}] Key {4 - keys.Count + 1} has been collected successfully.");
 		        
@@ -570,7 +570,7 @@ public class QuadrophobicMazeScript : MonoBehaviour
 				
 				visited[qi.CurrentPosition] = qi;
 
-				if (qi.CurrentPosition.Equals(goal))
+				if (qi.CurrentPosition == goal)
 				{
 					lastKnownPosition = qi.CurrentPositionIndex.ToArray();
 					goto goalfound;
@@ -607,7 +607,7 @@ public class QuadrophobicMazeScript : MonoBehaviour
 					}
 			}
 
-			throw new InvalidOperationException($"Goal {goals.FindIndex(goal.Equals) + 1} cannot be reached and is therefore unsolvable!");
+			throw new InvalidOperationException($"Goal {goals.FindIndex(x => x == goal) + 1} cannot be reached and is therefore unsolvable!");
 			
 			goalfound:
 			var r = goal;

@@ -43,7 +43,7 @@ public static class QMExtensions
             for (int z = 0; z < 4; z++)
                 for (int x = 0; x < 4; x++)
                     for (int y = 0; y < 4; y++)
-                        if (iconGrid[w, z, x, y].Equals(iconToFind))
+                        if (iconGrid[w, z, x, y] == iconToFind)
                             return new[] { w, z, x, y };
 
         return null;
@@ -181,7 +181,7 @@ public static class QMExtensions
 
         var flattenGrid = iconGrid.Cast<Icon>().ToArray();
 
-        var modifiedIndex = flattenGrid.IndexOf(startingIcon.Equals);
+        var modifiedIndex = flattenGrid.IndexOf(x => x == startingIcon);
 
         foreach (var index in convertedGroups)
         {
