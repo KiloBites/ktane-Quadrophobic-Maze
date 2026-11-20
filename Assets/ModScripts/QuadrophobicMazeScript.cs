@@ -117,7 +117,7 @@ public class QuadrophobicMazeScript : MonoBehaviour
 	    
 	    UpdatePosition();
 
-	    keys = QMExtensions.GenerateGoals(Bomb.GetSerialNumber(), iconGrid, currentPositionIcon);
+	    keys = QMExtensions.GenerateGoals(Bomb.GetSerialNumber(), iconGridGenerator.GeneratedSolveOrderGridFlattened, currentPositionIcon);
 	    resetKeysForReference = keys.ToList();
 	    
         

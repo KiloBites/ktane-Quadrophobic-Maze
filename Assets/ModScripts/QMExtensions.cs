@@ -165,7 +165,7 @@ public static class QMExtensions
         return total + 1;
     }
 
-    public static List<Icon> GenerateGoals(string sn, Icon[,,,] iconGrid, Icon startingIcon)
+    public static List<Icon> GenerateGoals(string sn, Icon[] iconGrid, Icon startingIcon)
     {
         var goals = new List<Icon>();
         
@@ -178,21 +178,17 @@ public static class QMExtensions
         var ternaryGroups = addedTernary.Select((x, i) => new { Index = i, Value = x }).GroupBy(x => x.Index / 4).Select(x => x.Select(v => v.Value).Join("")).Select(int.Parse).ToArray();
 
         var convertedGroups = ternaryGroups.Select(ConvertTernaryToDecimal).ToArray();
-
-        var flattenGrid = iconGrid.Cast<Icon>().ToArray();
-
-        var modifiedIndex = flattenGrid.IndexOf(x => x == startingIcon);
+        
+        var modifiedIndex = iconGrid.First(x => x == startingIcon).TableIndex;
 
         foreach (var index in convertedGroups)
         {
             modifiedIndex = (modifiedIndex + index) % 360;
 
-            while (flattenGrid.All(x => x.TableIndex != modifiedIndex) || goals.Contains(flattenGrid.First(x => x.TableIndex == modifiedIndex)))
+            while (iconGrid.All(x => x.TableIndex != modifiedIndex) || goals.Contains(iconGrid.First(x => x.TableIndex == modifiedIndex)))
                 modifiedIndex = (modifiedIndex + 1) % 360;
             
-            goals.Add(flattenGrid.First(x => x.TableIndex == modifiedIndex));
-            
-            
+            goals.Add(iconGrid.First(x => x.TableIndex == modifiedIndex));
         }
 
         return goals;

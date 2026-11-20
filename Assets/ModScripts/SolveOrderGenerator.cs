@@ -30,9 +30,11 @@ public struct Icon : IEquatable<Icon>
 public class SolveOrderGenerator
 {
     public Icon[,,,] GeneratedSolveOrderGrid { get; private set; }
+    public Icon[] GeneratedSolveOrderGridFlattened { get; private set; }
      
     public SolveOrderGenerator(Sprite[] icons)
     {
-        GeneratedSolveOrderGrid = Enumerable.Range(0, 360).ToList().Shuffle().Take(256).OrderBy(x => x).Select((x, i) => new Icon(icons[x], i, x)).To4DArray();
+        GeneratedSolveOrderGridFlattened = Enumerable.Range(0, 360).ToList().Shuffle().Take(256).OrderBy(x => x).Select((x, i) => new Icon(icons[x], i, x)).ToArray();
+        GeneratedSolveOrderGrid = GeneratedSolveOrderGridFlattened.To4DArray();
     }
  }
